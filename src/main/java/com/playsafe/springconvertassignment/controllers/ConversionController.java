@@ -8,7 +8,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.constraints.DecimalMin;
-import javax.validation.constraints.Positive;
 
 @Validated
 @RestController
@@ -29,13 +28,13 @@ public class ConversionController {
     }
 
     @GetMapping("/pounds_to_kilos/{pounds}")
-    public String calculatePoundsToKilos(@PathVariable @Positive Double pounds){
+    public String calculatePoundsToKilos(@PathVariable @DecimalMin("0.0") Double pounds){
         Double kilograms = conversionService.poundsToKilos(pounds);
-        return pounds + " lb " +  kilograms + " kg";
+        return pounds + " lb = " +  kilograms + " kg";
     }
 
     @GetMapping("/miles_to_km/{miles}")
-    public String calculateMilesToKm(@PathVariable @Positive Double miles){
+    public String calculateMilesToKm(@PathVariable @DecimalMin("0.0") Double miles){
         Double kilometres = conversionService.milesToKm(miles);
         return miles + " miles = " + kilometres + " km";
     }
