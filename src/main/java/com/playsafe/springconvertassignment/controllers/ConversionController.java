@@ -1,11 +1,16 @@
 package com.playsafe.springconvertassignment.controllers;
 
 import com.playsafe.springconvertassignment.services.ConversionService;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Positive;
+
+@Validated
 @RestController
 @RequestMapping("/api/converter")
 public class ConversionController {
@@ -16,20 +21,21 @@ public class ConversionController {
         this.conversionService = conversionService;
     }
 
+    // No negative temperature in Kelvin
     @GetMapping("/kelvin_to_celsius/{kelvin}")
-    public String calculateKelvinToCelsius(@PathVariable Double kelvin){
+    public String calculateKelvinToCelsius(@PathVariable @DecimalMin("0.0") Double kelvin){
         Double celsius = conversionService.kelvinToCelsius(kelvin);
         return kelvin + " K = " + celsius + " °C";
     }
 
     @GetMapping("/pounds_to_kilos/{pounds}")
-    public String calculatePoundsToKilos(@PathVariable Double pounds){
+    public String calculatePoundsToKilos(@PathVariable @Positive Double pounds){
         Double kilograms = conversionService.poundsToKilos(pounds);
         return pounds + " lb " +  kilograms + " kg";
     }
 
     @GetMapping("/miles_to_km/{miles}")
-    public String calculateMilesToKm(@PathVariable Double miles){
+    public String calculateMilesToKm(@PathVariable @Positive Double miles){
         Double kilometres = conversionService.milesToKm(miles);
         return miles + " miles = " + kilometres + " km";
     }
