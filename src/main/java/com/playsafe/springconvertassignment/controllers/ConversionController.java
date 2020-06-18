@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/ap/converter")
+@RequestMapping("/api/converter")
 public class ConversionController {
 
     private final ConversionService conversionService;
